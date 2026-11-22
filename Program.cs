@@ -113,3 +113,58 @@ class Country
         return GetCountries().Any(c => c.Code == code);
     }
 }
+
+// 
+// PHONEBOOK CLASS
+// Manages the collection of student records.
+// 
+class Phonebook
+{
+    private List<Student> students = new List<Student>();
+
+    // Add a new student.
+    public bool AddStudent(Student student)
+    {
+        if (FindStudent(student.StudentNumber) != null)
+        {
+            return false;
+        }
+
+        students.Add(student);
+        return true;
+    }
+
+    // Find a student using their student number.
+    public Student? FindStudent(string studentNumber)
+    {
+        return students.FirstOrDefault(
+            s => s.StudentNumber.Equals(
+                studentNumber,
+                StringComparison.OrdinalIgnoreCase));
+    }
+
+    // Check whether a student number is already used.
+    public bool IsStudentNumberTaken(string studentNumber)
+    {
+        return FindStudent(studentNumber) != null;
+    }
+
+    // Retrieve all students alphabetically by surname.
+    public List<Student> GetAllStudents()
+    {
+        return students
+            .OrderBy(s => s.Surname)
+            .ThenBy(s => s.FirstName)
+            .ToList();
+    }
+
+    // Retrieve students from selected countries.
+    public List<Student> GetStudentsByCountryCodes(List<string> countryCodes)
+    {
+        return students
+            .Where(s => countryCodes.Contains(s.CountryCode))
+            .OrderBy(s => s.Surname)
+            .ThenBy(s => s.FirstName)
+            .ToList();
+    }
+}
