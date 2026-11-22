@@ -69,3 +69,47 @@ class Student : Person
         Console.WriteLine("Phone Number   : " + GetCompletePhoneNumber());
     }
 }
+
+// 
+// COUNTRY CLASS
+// Handles the supported ASEAN countries.
+// 
+class Country
+{
+    public string Name { get; set; }
+    public string Code { get; set; }
+
+    public Country(string name, string code)
+    {
+        Name = name;
+        Code = code;
+    }
+
+    // Retrieve all supported countries.
+    public static List<Country> GetCountries()
+    {
+        return new List<Country>
+        {
+            new Country("Malaysia", "60"),
+            new Country("Indonesia", "62"),
+            new Country("Philippines", "63"),
+            new Country("Singapore", "65"),
+            new Country("Thailand", "66")
+        };
+    }
+
+    // Get country name using its code.
+    public static string GetCountryName(string code)
+    {
+        Country? country = GetCountries()
+            .FirstOrDefault(c => c.Code == code);
+
+        return country == null ? "Unknown Country" : country.Name;
+    }
+
+    // Check whether the country code is valid.
+    public static bool IsValidCode(string code)
+    {
+        return GetCountries().Any(c => c.Code == code);
+    }
+}
