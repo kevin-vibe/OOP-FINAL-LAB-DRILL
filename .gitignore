@@ -1,0 +1,13 @@
+# Build files
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+
+# VS Code workspace settings
+.vscode/
+
+# User-specific files
+*.user
+*.suo
