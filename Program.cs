@@ -418,3 +418,102 @@ class PhonebookUI
             student.DisplayInformation();
         }
     }
+
+
+    // 
+    // SEARCH BY COUNTRY
+    // 
+
+    public void SearchByCountry()
+    {
+        Console.WriteLine("\n========== SEARCH BY COUNTRY ==========");
+
+        List<Country> countries = Country.GetCountries();
+
+        Console.WriteLine("1. Philippines (63)");
+        Console.WriteLine("2. Thailand (66)");
+        Console.WriteLine("3. Singapore (65)");
+        Console.WriteLine("4. Indonesia (62)");
+        Console.WriteLine("5. Malaysia (60)");
+        Console.WriteLine("6. ALL COUNTRIES");
+        Console.WriteLine("0. No More Selections");
+
+        List<string> selectedCodes = new List<string>();
+
+        while (true)
+        {
+            Console.Write("\nSelect country: ");
+            string choice = Console.ReadLine() ?? "";
+
+            if (choice == "0")
+            {
+                break;
+            }
+
+            if (choice == "6")
+            {
+                selectedCodes.Clear();
+
+                foreach (Country country in countries)
+                {
+                    selectedCodes.Add(country.Code);
+                }
+
+                break;
+            }
+
+            string? selectedCode = choice switch
+            {
+                "1" => "63",
+                "2" => "66",
+                "3" => "65",
+                "4" => "62",
+                "5" => "60",
+                _ => null
+            };
+
+            if (selectedCode == null)
+            {
+                Console.WriteLine("Invalid country selection.");
+                continue;
+            }
+
+            if (selectedCodes.Contains(selectedCode))
+            {
+                Console.WriteLine("Country already selected.");
+                continue;
+            }
+
+            selectedCodes.Add(selectedCode);
+
+            Console.WriteLine(
+                Country.GetCountryName(selectedCode) + " added to search.");
+        }
+
+        if (selectedCodes.Count == 0)
+        {
+            Console.WriteLine("No countries selected.");
+            return;
+        }
+
+        List<Student> results =
+            phonebook.GetStudentsByCountryCodes(selectedCodes);
+
+        Console.WriteLine("\n========== SEARCH RESULTS ==========");
+
+        if (results.Count == 0)
+        {
+            Console.WriteLine("No student records found.");
+            return;
+        }
+
+        Console.WriteLine("Total Students Found: " + results.Count);
+
+        foreach (Student student in results)
+        {
+            student.DisplayInformation();
+        }
+
+        Console.WriteLine("----------------------------------------");
+    }
+}
