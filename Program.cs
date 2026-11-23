@@ -227,3 +227,75 @@ class InputHelper
         }
     }
 }
+
+
+// 
+// PHONEBOOK UI CLASS
+// Handles user interaction and phonebook
+// operations storing, editing,
+// and searching student records.
+//
+class PhonebookUI
+{
+    private Phonebook phonebook;
+
+    // Constructor receives the Phonebook object.
+    public PhonebookUI(Phonebook phonebook)
+    {
+        this.phonebook = phonebook;
+    }
+
+
+    // 
+    // STORE STUDENT
+    // Collects information and adds a record.
+    // 
+    public void StoreStudent()
+    {
+        Console.WriteLine("\n========== STORE STUDENT ==========");
+
+        string studentNumber =
+            InputHelper.ReadRequired("Student Number: ");
+
+        if (phonebook.IsStudentNumberTaken(studentNumber))
+        {
+            Console.WriteLine("A student with that number already exists.");
+            return;
+        }
+
+        string surname = InputHelper.ReadRequired("Surname: ");
+        string firstName = InputHelper.ReadRequired("First Name: ");
+        string occupation = InputHelper.ReadRequired("Occupation: ");
+        string gender = InputHelper.ReadGender();
+
+        Console.WriteLine("\nAvailable Countries:");
+
+        foreach (Country country in Country.GetCountries())
+        {
+            Console.WriteLine(country.Name + " - " + country.Code);
+        }
+
+        string countryCode = InputHelper.ReadCountryCode();
+        string areaCode = InputHelper.ReadRequired("Area Code: ");
+        string phoneNumber = InputHelper.ReadRequired("Phone Number: ");
+
+        Student newStudent = new Student(
+            studentNumber,
+            surname,
+            firstName,
+            occupation,
+            gender,
+            countryCode,
+            areaCode,
+            phoneNumber
+        );
+
+        if (phonebook.AddStudent(newStudent))
+        {
+            Console.WriteLine("\nStudent record successfully stored!");
+        }
+        else
+        {
+            Console.WriteLine("\nUnable to store student record.");
+        }
+    }
