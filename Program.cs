@@ -168,3 +168,62 @@ class Phonebook
             .ToList();
     }
 }
+
+
+// 
+// INPUT HELPER CLASS
+// Handles input and validation methods.
+// 
+class InputHelper
+{
+    // Read input that cannot be empty.
+    public static string ReadRequired(string message)
+    {
+        while (true)
+        {
+            Console.Write(message);
+            string input = (Console.ReadLine() ?? "").Trim();
+
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
+
+            Console.WriteLine("This field cannot be empty.");
+        }
+    }
+
+    // Read and validate gender.
+    public static string ReadGender()
+    {
+        while (true)
+        {
+            Console.Write("Gender (M/F): ");
+            string gender = (Console.ReadLine() ?? "").Trim().ToUpper();
+
+            if (gender == "M" || gender == "F")
+            {
+                return gender;
+            }
+
+            Console.WriteLine("Invalid gender. Please enter M or F.");
+        }
+    }
+
+    // Read and validate country code.
+    public static string ReadCountryCode()
+    {
+        while (true)
+        {
+            Console.Write("Enter Country Code: ");
+            string code = (Console.ReadLine() ?? "").Trim();
+
+            if (Country.IsValidCode(code))
+            {
+                return code;
+            }
+
+            Console.WriteLine("Invalid country code. Please select one of the listed countries.");
+        }
+    }
+}
