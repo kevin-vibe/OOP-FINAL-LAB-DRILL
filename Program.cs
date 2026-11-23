@@ -517,3 +517,55 @@ class PhonebookUI
         Console.WriteLine("----------------------------------------");
     }
 }
+
+
+//
+// PROGRAM 
+// Handles the main menu and program execution.
+// 
+class Program
+{
+    static void Main(string[] args)
+    {
+        Phonebook phonebook = new Phonebook();
+        PhonebookUI ui = new PhonebookUI(phonebook);
+
+        while (true)
+        {
+            Console.WriteLine("\n========================================");
+            Console.WriteLine("             ASEAN PHONEBOOK");
+            Console.WriteLine("========================================");
+            Console.WriteLine("1. Store Student");
+            Console.WriteLine("2. Edit Student");
+            Console.WriteLine("3. Search by Country");
+            Console.WriteLine("4. Exit");
+            Console.WriteLine("========================================");
+            Console.Write("Enter your choice: ");
+
+            string choice = Console.ReadLine() ?? "";
+
+            switch (choice)
+            {
+                case "1":
+                    ui.StoreStudent();
+                    break;
+
+                case "2":
+                    ui.EditStudent();
+                    break;
+
+                case "3":
+                    ui.SearchByCountry();
+                    break;
+
+                case "4":
+                    Console.WriteLine("Thank you for using ASEAN Phonebook!");
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    break;
+            }
+        }
+    }
+}
